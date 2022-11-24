@@ -5,14 +5,20 @@ import axios from "axios";
 const movies = ref("");
 const response = ref(null);
 
-const getMovie = async () => {
-  response.value = (
-    await axios.get("https://api.themoviedb.org/3/movie/${movies.value}", {
-      params: {
-        api_key: "289d7511f89338dfaa9d5bc06621094c",
-      },
-    })
-  ).data;
+const getData = async (url, params) => {
+  try {
+    return await axios.get(url, params);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getMovies = async () => {
+  response.value = (await axios.get(`https://api.themoviedb.org/3/movie/${movies.value}`, {
+    params: {
+      api_key: "289d7511f89338dfaa9d5bc06621094c",
+    },
+  })).data;
 };
 </script>
 
@@ -31,7 +37,7 @@ const getMovie = async () => {
     <option value="135531">Fairy Tail the Movie: Phoenix Priestess</option>
     <option value="372058">Your Name.</option>
   </select>
-  <button @click="getMovie">Get</button>
+  <button @click="getMovies">Get</button>
   <div v-if="response" class="movies-container">
     <p> {{ response.title }}</p>
     <p>Overview: {{ response.overview }}</p>
@@ -41,8 +47,8 @@ const getMovie = async () => {
     <p>Vote Average: {{ response.vote_average }}</p>
     <p>Vote Count: {{ response.vote_count }}</p>
     <p>Revenue: {{ response.revenue }}</p>
-    <img scr='https://image.tmdb.org/t/p/w500' {{response.poster_path}}>
-    <img scr='https://image.tmdb.org/t/p/w500' {{response.backdrop_path}}>
+    <img :src="`https://image.tmdb.org/t/p/w500/${response.poster_path}`" />
+    <!-- <img scr='https://image.tmdb.org/t/p/w500{{response.backdrop_path}}'> -->
   </div>
 </template>
 
