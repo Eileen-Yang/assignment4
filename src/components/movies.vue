@@ -6,9 +6,8 @@ const movies = ref("");
 const response = ref(null);
 
 const getMovie = async () => {
-  const data = movie.value;
   response.value = (
-    await axios.get("https://api.themoviedb.org/3/movie/${id}", {
+    await axios.get("https://api.themoviedb.org/3/movie/${movies.value}", {
       params: {
         api_key: "289d7511f89338dfaa9d5bc06621094c",
       },
@@ -18,6 +17,8 @@ const getMovie = async () => {
 </script>
 
 <template>
+  <header>Movies</header>
+  <label>Choose a Movie:</label>
   <select v-model="movies">
     <option value="438148">Minions: The Rise of Gru</option>
     <option value="539681">DC League of Super-Pets</option>
@@ -31,11 +32,70 @@ const getMovie = async () => {
     <option value="372058">Your Name.</option>
   </select>
   <button @click="getMovie">Get</button>
-  <div v-if="response" class="movie-container">
+  <div v-if="response" class="movies-container">
     <p> {{ response.title }}</p>
     <p>Overview: {{ response.overview }}</p>
+    <p>Release Date: {{ response.release_date }}</p>
     <p>Original Language: {{ response.original_language }}</p>
     <p>Popularity: {{ response.popularity }}</p>
     <p>Vote Average: {{ response.vote_average }}</p>
+    <p>Vote Count: {{ response.vote_count }}</p>
+    <p>Revenue: {{ response.revenue }}</p>
+    <img scr='https://image.tmdb.org/t/p/w500' {{response.poster_path}}>
+    <img scr='https://image.tmdb.org/t/p/w500' {{response.backdrop_path}}>
   </div>
 </template>
+
+<style scoped>
+* {
+  font-size: 100%;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-top: 0px;
+  margin-bottom: 25px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+header {
+  margin: 0px;
+  font-family: 'Anton', sans-serif;
+  font-size: 350%;
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 150%;
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+select#Movies {
+  margin-top: 5px;
+  font-size: 130%;
+}
+
+/*input#get {
+  font-size: 140%;
+  background-color: lightskyblue;
+  border-color: white;
+}*/
+
+option {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+div {
+  width: 100%;
+  margin-left: 10px;
+  font-size: 135%;
+}
+
+img {
+  position: relative;
+  width: 45%;
+  margin-right: 25px;
+  margin-left: 25px;
+}
+</style>
