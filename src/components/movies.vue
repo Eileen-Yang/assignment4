@@ -44,11 +44,11 @@ const getMovies = async () => {
     <p>Release Date: {{ response.release_date }}</p>
     <p>Original Language: {{ response.original_language }}</p>
     <p>Popularity: {{ response.popularity }}</p>
-    <p>Vote Average: {{ response.vote_average }}</p>
+    <p>Vote Average: {{ response.vote_average }}/10.0</p>
     <p>Vote Count: {{ response.vote_count }}</p>
-    <p>Revenue: {{ response.revenue }}</p>
+    <p>Revenue: ${{ response.revenue }}</p>
     <img :src="`https://image.tmdb.org/t/p/w500/${response.poster_path}`" />
-    <!-- <img scr='https://image.tmdb.org/t/p/w500{{response.backdrop_path}}'> -->
+    <img :src="`https://image.tmdb.org/t/p/w500/${response.backdrop_path}`" />
   </div>
 </template>
 
@@ -77,16 +77,14 @@ label {
   margin-left: 10px;
 }
 
-select#Movies {
+/*select#Movies {
   margin-top: 5px;
   font-size: 130%;
-}
-
-/*input#get {
-  font-size: 140%;
-  background-color: lightskyblue;
-  border-color: white;
 }*/
+
+select {
+  width: 100%;
+}
 
 option {
   font-family: Georgia, 'Times New Roman', Times, serif;
@@ -99,9 +97,10 @@ div {
 }
 
 img {
-  position: relative;
-  width: 45%;
-  margin-right: 25px;
-  margin-left: 25px;
-}
+    position: relative;
+    width: 45%;
+    margin-right: 25px;
+    margin-left: 25px;
+  }
+  
 </style>
